@@ -14,21 +14,27 @@ app.use(express.urlencoded({ extended: false }));
 app.use(ejsLayouts);
 
 // Custom Middleware
-app.use(async (req, res, next) => {
-    if (req.cookies.userId) {
-        const decryptedId = cryptoJS.AES.decrypt(req.cookies.userId, process.env.SECRET);
-        const decryptedIdString = decryptedId.toString(cryptoJS.enc.Utf8);
+app.use(async (req, res, next)=>{
+    if(req.cookies.userId){
+        // decrypting the incoming user id from the cookie
+        const decryptedId = cryptoJS.AES.decrypt(req.cookies.userId, process.env.SECRET)
+        // converting the decrypted id into a readable string
+        const decryptedIdString = decryptedId.toString(cryptoJS.enc.Utf8)
+        // querying the db for the user with that id
         const user = await db.user.findByPk(decryptedIdString)
-        res.locals.user = user;
-    } else res.locals.user = null;
-    next();
-});
+        // assigning the found user to res.locals.user in the routes, and user in the ejs
+        res.locals.user = user
+    } else res.locals.user = null
+    next() // move on to next middleware
+})
 
 app.use("/users", require("./controllers/users"));
 
 // Routes
 app.get("/", (req, res) => {
     res.render("index");
+    console.log("cookies",req.cookies);
+    console.log("locals",req.locals);
 });
 
 app.listen(port, () => {
