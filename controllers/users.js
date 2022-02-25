@@ -2,7 +2,7 @@ const express = require("express");
 const db = require("../models");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const cryptojs = require("crypto-js");
+const cryptoJS = require("crypto-js");
 require('dotenv').config()
 
 router.get("/new", (req, res) => {
@@ -22,7 +22,7 @@ router.post("/new", async (req, res) => {
         await newUser.save();
 
         // encrypt user id via AES
-        const encryptedUserId = cryptojs.AES.encrypt(newUser.id.toString(), process.env.SECRET);
+        const encryptedUserId = cryptoJS.AES.encrypt(newUser.id.toString(), process.env.SECRET);
         const encryptedUserIdString = encryptedUserId.toString();
         // store encrypted id in cookie of res obj
         res.cookie({ "userId": encryptedUserIdString });
@@ -45,7 +45,7 @@ router.post("/login", async (req, res) => {
     } else {
         console.log("logging in the user!");
         // encrypt user id via AES
-        const encryptedUserId = cryptojs.AES.encrypt(user.id.toString(), process.env.SECRET);
+        const encryptedUserId = cryptoJS.AES.encrypt(user.id.toString(), process.env.SECRET);
         const encryptedUserIdString = encryptedUserId.toString();
         // store encrypted id in cookie of res obj
         res.cookie({ "userId": encryptedUserIdString });
