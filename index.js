@@ -16,16 +16,7 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
-app.get("/users/new", (req, res) => {
-    res.render("users/new");
-});
-
-app.post("/users/new", (req, res) => {
-    db.user.findOrCreate({
-        
-    })
-    res.redirect("/");
-});
+app.use('/users', require('./controllers/user'));
 
 app.listen(port, () => {
     console.log("Server running on PORT:", port);
