@@ -45,7 +45,7 @@ router.post("/login", async (req, res) => {
     } else {
         console.log("logging in the user!");
         // encrypt user id via AES
-        const encryptedUserId = cryptojs.AES.encrypt(newUser.id.toString(), process.env.SECRET);
+        const encryptedUserId = cryptojs.AES.encrypt(user.id.toString(), process.env.SECRET);
         const encryptedUserIdString = encryptedUserId.toString();
         // store encrypted id in cookie of res obj
         res.cookie({ "userId": encryptedUserIdString });
