@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
-app.use('/users', require('./controllers/user'));
+app.use('/users', require('./controllers/users'));
 
 app.listen(port, () => {
     console.log("Server running on PORT:", port);

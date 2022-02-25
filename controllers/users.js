@@ -7,10 +7,7 @@ router.get("/new", (req, res) => {
 });
 
 router.post("/new", (req, res) => {
-    db.user.findOrCreate({
-        
-    })
-    res.redirect("/");
+    res.json(req.body);
 });
 
 module.exports = router;
