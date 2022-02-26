@@ -11,6 +11,7 @@ const port = process.env.PORT || 4000;
 app.set("view engine", "ejs");
 app.use(cookieParser()); // gives access to req.cookies
 app.use(express.urlencoded({ extended: false }));
+app.use("/public", express.static("public"));
 app.use(ejsLayouts);
 
 // Custom Middleware
